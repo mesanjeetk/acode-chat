@@ -64,7 +64,7 @@ class AcodePlugin {
         const userContainer = tag("div", { className: "container", role: "list" });
 
         // demo users — replace with real data later
-        Array.from({ length: 10 }).forEach((_, i) => {
+        Array.from({ length: 100 }).forEach((_, i) => {
           const userCard = tag("div", {
             className: "user-card",
             textContent: `User ${i + 1}`,
