@@ -1,0 +1,15 @@
+{
+  "id": "acode.chattu.chat",
+  "name": "Chattu",
+  "main": "dist/main.js",
+  "version": "1.0.0",
+  "readme": "readme.md",
+  "icon": "icon.png",
+  "files": [],
+  "minVersionCode": 290,
+  "author": {
+    "name": "Sanjeet Kumar",
+    "email": "sanjeetk.dev@gmail.com",
+    "github": "sanjeetk-dev"
+  }
+}

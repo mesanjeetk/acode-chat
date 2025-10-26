@@ -1,0 +1,30 @@
+{
+  "name": "acode-chat-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "keywords": [],
+  "author": "Sanjeet Kumar",
+  "license": "ISC",
+  "browserslist": [
+    "> 0.25%, not dead"
+  ],
+  "resolutions": {
+    "terser": ">=5.14.2 ",
+    "glob-parent": ">=5.1.2"
+  },
+  "dependencies": {
+    "html-tag-js": "^2.4.16",
+    "postcss": "^8.5.6"
+  },
+  "devDependencies": {
+    "@types/ace": "^0.0.52",
+    "@types/node": "^24.9.1",
+    "esbuild": "^0.25.11",
+    "esbuild-sass-plugin": "^3.3.1",
+    "jszip": "^3.10.1"
+  }
+}
