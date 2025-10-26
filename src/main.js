@@ -1,8 +1,7 @@
 import plugin from "../plugin.json";
 const sideBarApps = acode.require("sidebarApps");
 
-import "./style.scss"; // ensure bundler emits CSS
-// Or if you prefer runtime-loaded CSS, keep the <link> in init()
+import "./style.scss"; 
 
 class AcodePlugin {
   constructor() {
@@ -61,7 +60,7 @@ class AcodePlugin {
         header.append(title, search);
 
         // User list
-        const userContainer = tag("div", { className: "container", role: "list" });
+        const userContainer = tag("div", { className: "container scroll", role: "list" });
 
         // demo users — replace with real data later
         Array.from({ length: 100 }).forEach((_, i) => {
