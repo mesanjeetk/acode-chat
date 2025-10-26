@@ -109,13 +109,12 @@
   // The area that scrolls — ensure it fills remaining space
   .container {
     overflow-y: auto;
-    max-height: calc(100% - 56px); // header + padding estimate; safe fallback
+    max-height: 350px;// header + padding estimate; safe fallback
     padding-right: 6px; // space for scrollbar
     display: flex;
     flex-direction: column;
     gap: 8px;
     margin-top: 5px;
-    height: 100%;
 
     // Custom scrollbar (webkit)
     &::-webkit-scrollbar {

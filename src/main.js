@@ -43,7 +43,7 @@ class AcodePlugin {
         content.classList.add("scroll", "chat-container");
         // content.style.height = "100%";
         // content.style.minHeight = "100vh";
-        content.style.maxHeight = "1000px";
+        content.style.maxHeight = "400px";
         content.style.overflowY = "auto";
         content.setAttribute("role", "region");
         content.setAttribute("aria-label", "Chattu sidebar");
