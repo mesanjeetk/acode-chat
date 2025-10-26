@@ -9,8 +9,8 @@ class AcodePlugin {
     // if (sideBarApps.get(plugin.id)) {
     //   sideBarApps.remove(plugin.id);
     // }
-    console.log(sideBarApps.get(plugin.id))
     this.initSideBar();
+    console.log(sideBarApps.get(plugin.id))
   }
 
   // Accept the props acode provides — clearer for future usage
