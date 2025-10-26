@@ -4,7 +4,8 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "push": "node push.js"
   },
   "keywords": [],
   "author": "Sanjeet Kumar",
