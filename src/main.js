@@ -7,9 +7,9 @@ import "./style.scss"; // ensure bundler emits CSS
 class AcodePlugin {
   constructor() {
     // Remove existing instance (idempotent)
-    if (sideBarApps.get(plugin.id)) {
-      sideBarApps.remove(plugin.id);
-    }
+    // if (sideBarApps.get(plugin.id)) {
+    //   sideBarApps.remove(plugin.id);
+    // }
     this.initSideBar();
   }
 
@@ -31,7 +31,7 @@ class AcodePlugin {
 
   initSideBar() {
     // Only add once (defensive)
-    if (sideBarApps.get(plugin.id)) return;
+    // if (sideBarApps.get(plugin.id)) return;
 
     sideBarApps.add(
       "chat-icon",
