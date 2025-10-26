@@ -9,6 +9,7 @@ class AcodePlugin {
     // if (sideBarApps.get(plugin.id)) {
     //   sideBarApps.remove(plugin.id);
     // }
+    console.log(sideBarApps.get(plugin.id))
     this.initSideBar();
   }
 
@@ -40,9 +41,9 @@ class AcodePlugin {
         // Wrapper that fills available area (avoid using viewport units)
         const content = document.createElement('div');
         content.classList.add("scroll", "chat-container");
-        content.style.height = "100%";
-        content.style.minHeight = "100vh";
-        content.style.maxHeight = "100vh";
+        // content.style.height = "100%";
+        // content.style.minHeight = "100vh";
+        content.style.maxHeight = "1000px";
         content.style.overflowY = "auto";
         content.setAttribute("role", "region");
         content.setAttribute("aria-label", "Chattu sidebar");
