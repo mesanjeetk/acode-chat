@@ -7,7 +7,7 @@ import style from "./style.scss";
 class AcodePlugin {
     async init() {
         console.log("hello world");
-        this.$style = tag("style", {
+        this.$style = tag("link", {
             rel: "stylesheet",
             href: this.baseUrl + "main.css"
         });
@@ -21,7 +21,7 @@ class AcodePlugin {
             (container) => {
                 const content = document.createElement('div');
                 content.classList.add("scroll", "chat-container") 
-                content.style.maxHeight = '100vh'; // Set max height
+                content.style.maxHeight = '100vh';
                 content.style.overflowY = 'auto';
 
                 content.innerHTML = `
