@@ -4,19 +4,38 @@ const sideBarApps = acode.require("sidebarApps");
 
 import style from "./style.scss";
 
-class AcodePlugin{
+class AcodePlugin {
     async init() {
         console.log("hello world");
-        this.$style = tag("style",{
+        this.$style = tag("style", {
             rel: "stylesheet",
             href: this.baseUrl + "main.css"
         });
         document.head.append(this.$style);
         acode.addIcon("chat-icon", this.baseUrl + "icon.png");
 
-        console.log(style)
+        sideBarApps.add(
+            "chat-icon",
+            plugin.id,
+            "Chattu",
+            (container) => {
+                const content = document.createElement('div');
+                content.classList.add("scroll", "chat-container") 
+                content.style.maxHeight = '100vh'; // Set max height
+                content.style.overflowY = 'auto';
 
+                content.innerHTML = `
+                    <header>
+                        <h1>Chattu</h1>
+                    </header>
+                `
 
+                container.appendChild(content);
+            },
+            (container) => {
+                console.log('App selected');
+            }
+        )
     }
 
     async destroy() {
