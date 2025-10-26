@@ -32,6 +32,7 @@ class AcodePlugin {
 
                 container.appendChild(content);
             },
+            false,
             (container) => {
                 console.log('App selected');
             }
