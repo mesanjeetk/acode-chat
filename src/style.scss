@@ -1,42 +1,276 @@
-// Variables
-$primary-color: #3498db;
-$font-stack: 'Segoe UI', sans-serif;
+// style.scss — Chattu sidebar styles
+// -------------------------------
+// Features:
+// - CSS variables for easy theming
+// - Dark / light variants via .theme-dark on a parent (e.g., body or plugin container)
+// - .compact modifier to show compact/mini user cards
+// - Accessible focus styles and reduced-motion preference
+// - Basic custom scrollbar styling (WebKit + fallback)
 
-// Mixins
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// Variables
+:root {
+  --bg: #0b0d0f;
+  --panel: #0f1113;
+  --muted: #9aa3ad;
+  --text: #e6eef3;
+  --accent: #4facfe;
+  --accent-2: #7ee7c6;
+  --card-bg: #121416;
+  --card-border: rgba(255,255,255,0.03);
+  --shadow: 0 6px 18px rgba(2,6,23,0.7);
+  --radius: 12px;
+  --gap: 12px;
+  --avatar-size: 40px;
+  --avatar-size-compact: 28px;
+  --font-stack: "Inter", "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;
+  --transition-fast: 160ms;
+  --transition-medium: 260ms;
+  --z-elev: 10;
 }
 
-// Nesting
+/* Light theme variables (override as needed) */
+.theme-light {
+  --bg: #f6f8fb;
+  --panel: #ffffff;
+  --muted: #6b7280;
+  --text: #0b1220;
+  --accent: #0b66ff;
+  --accent-2: #0aa870;
+  --card-bg: #ffffff;
+  --card-border: rgba(2,6,23,0.06);
+  --shadow: 0 6px 20px rgba(4,12,30,0.06);
+}
+
+/* Root plugin container */
 .chat-container {
-  font-family: $font-stack;
-  background-color: #6f5c5c;
+  font-family: var(--font-stack);
+  background: linear-gradient(180deg, var(--panel), var(--bg));
+  color: var(--text);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  padding: 12px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  overflow: hidden; // container handles inner scroll
+  -webkit-font-smoothing: antialiased;
+  position: relative;
 
-  header {
-    background-color: $primary-color;
-    color: white;
-    padding: 1rem;
+  // Respect prefers-reduced-motion
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
 
-    h1 {
-      font-size: 2rem;
+  // Header
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 4px;
+    flex-shrink: 0;
+
+    .chat-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1;
+      letter-spacing: 0.2px;
+    }
+
+    .chat-search {
+      margin-left: auto;
+      width: 44%;
+      max-width: 260px;
+      min-width: 110px;
+      border: 1px solid transparent;
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 8px;
+      outline: none;
+      font-size: 0.95rem;
+      transition: box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+
+      &::placeholder {
+        color: var(--muted);
+        opacity: 0.9;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 4px rgba(79,172,254,0.08);
+        border-color: rgba(79,172,254,0.18);
+        background: rgba(255,255,255,0.02);
+      }
     }
   }
 
+  // The area that scrolls — ensure it fills remaining space
   .container {
-    @include flex-center;
-    height: 100vh;
+    overflow-y: auto;
+    height: calc(100% - 56px); // header + padding estimate; safe fallback
+    padding-right: 6px; // space for scrollbar
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 
-    .card {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    // Custom scrollbar (webkit)
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border-radius: 999px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  }
 
-      &:hover {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  // Each user card
+  .user-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), transparent);
+    border: 1px solid var(--card-border);
+    transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast);
+    cursor: pointer;
+    user-select: none;
+    min-height: calc(var(--avatar-size) + 8px);
+    box-sizing: border-box;
+
+    // accessible focus
+    &:focus,
+    &:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(79,172,254,0.08);
+      transform: translateY(-2px);
+    }
+
+    &:hover {
+      transform: translateY(-3px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    }
+
+    // avatar placeholder
+    .avatar {
+      width: var(--avatar-size);
+      height: var(--avatar-size);
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(2,6,23,0.35);
+    }
+
+    .meta {
+      display: flex;
+      flex-direction: column;
+      min-width: 0; // allow truncation
+      .name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .sub {
+        font-size: 0.82rem;
+        color: var(--muted);
+        margin-top: 2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
+
+    .presence {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--muted);
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #6b7280;
+        box-shadow: 0 0 0 4px rgba(0,0,0,0.12) inset;
+      }
+      &.online .dot { background: #34d399; } // green
+      &.busy .dot { background: #fb923c; }  // orange
+      &.offline .dot { background: #9ca3af; } // grey
+    }
+  }
+
+  // Compact variant — avatars shrink and name hidden
+  &.compact {
+    .user-card {
+      padding: 6px;
+      min-height: calc(var(--avatar-size-compact) + 4px);
+
+      .avatar {
+        width: var(--avatar-size-compact);
+        height: var(--avatar-size-compact);
+        font-size: 0.65rem;
+      }
+
+      .meta { display: none; } // hide names for ultra-compact
+      .presence { display: none; }
+    }
+
+    .chat-header .chat-title { display: none; }
+    .chat-header .chat-search { display: none; }
+  }
+
+  // Empty state
+  .empty-state {
+    margin: auto;
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.95rem;
+    padding: 18px;
+  }
+
+  // small screens inside the plugin (if plugin panel is narrow)
+  @media (max-width: 360px) {
+    padding: 8px;
+    .chat-header .chat-search { display: none; }
+    .user-card { gap: 8px; padding: 6px; }
+  }
+}
+
+/* Utility: small, reusable class for visually-hidden text */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* Optional: subtle separators between groups */
+.user-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  & + .user-group {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(255,255,255,0.02);
   }
 }
